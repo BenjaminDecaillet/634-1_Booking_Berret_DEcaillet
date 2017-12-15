@@ -186,10 +186,13 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelsController.cs" />
+    <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\Room.cs" />
