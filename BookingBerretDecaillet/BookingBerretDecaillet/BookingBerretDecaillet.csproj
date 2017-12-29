@@ -192,6 +192,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement.cs" />
+    <Compile Include="Migrations\201712291603495_Initial.cs" />
+    <Compile Include="Migrations\201712291603495_Initial.Designer.cs">
+      <DependentUpon>201712291603495_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Picture.cs" />
@@ -265,6 +269,11 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201712291603495_Initial.resx">
+      <DependentUpon>201712291603495_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

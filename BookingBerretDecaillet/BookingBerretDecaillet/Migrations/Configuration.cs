@@ -2,6 +2,7 @@ namespace BookingBerretDecaillet.Migrations
 {
     using BookingBerretDecaillet.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -15,11 +16,27 @@ namespace BookingBerretDecaillet.Migrations
 
         protected override void Seed(BookingBerretDecaillet.HotelManagement context)
         {
-            //Rooms Creation
+            //Hotels Creation
             List<Room> rooms;
-            //context.Rooms.AddOrUpdate(x => x.IdRoom,
-            //Octodure Rooms
-            context.Hotels.AddOrUpdate(x => x.IdHotel, new Hotel() { IdHotel = 1, Name = "Octodure" });
+
+            //Octodure
+            Hotel hotOct = new Hotel()
+            {
+                IdHotel = 1,
+                Name = "Octodure",
+                Description = "Hotel octodure Martigny",
+                Location = "Martigny",
+                Category = 4,
+                Wifi = true,
+                Parking = true,
+                Phone = "0273231007",
+                Email = "octodurehotel@hotmail.ch",
+                WebSite = "htttp://www.octodurehotel.com"
+            };
+            // Add hotel
+            context.Hotels.Add(hotOct);
+            context.SaveChanges();
+            //Add Rooms
             rooms = new List<Room>() {
                     new Room()
                 {
@@ -121,10 +138,27 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 1).FirstOrDefault()
                 }
                 };
-            context.Hotels.AddOrUpdate(x => x.IdHotel, new Hotel() { IdHotel = 1, Name = "Octodure", Description = "Hotel octodure Martigny", rooms = rooms });
+            hotOct.rooms = rooms;
+            context.SaveChanges();
 
-            //Constantin Rooms
-            context.Hotels.AddOrUpdate(x => x.IdHotel, new Hotel() { IdHotel = 2, Name = "Constantin" });
+
+            //Constantin
+            Hotel hotConst = new Hotel()
+            {
+                IdHotel = 2,
+                Name = "Constantin",
+                Description = "Hotel Constantin Martigny",
+                Location = "Martigny",
+                Category = 4,
+                Wifi = true,
+                Parking = true,
+                Phone = "0273294242",
+                Email = "constantinhotel@hotmail.ch",
+                WebSite = "htttp://www.constantinhotel.com"
+            };
+            // Add hotel
+            context.Hotels.Add(hotConst);
+            context.SaveChanges();
             rooms = new List<Room>() {
                 new Room()
                 {
@@ -226,15 +260,26 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 2).FirstOrDefault()
                 }
             };
-            context.Hotels.AddOrUpdate(x => x.IdHotel, new Hotel()
+            hotConst.rooms = rooms;
+            context.SaveChanges();
+
+            //Valais Palace
+            Hotel hotValPal = new Hotel()
             {
-                IdHotel = 2,
-                Name = "Constantin",
-                Description = "Hotel Constantin Martigny",
-                rooms = rooms
-            });
-            //Valais Palace Rooms
-            context.Hotels.AddOrUpdate(x => x.IdHotel, new Hotel() { IdHotel = 3, Name = "Valais Palace" });
+                IdHotel = 3,
+                Name = "Valais Palace",
+                Description = "Hotel Valais Palace Sion",
+                Location = "Sion",
+                Category = 4,
+                Wifi = true,
+                Parking = true,
+                Phone = "0273238969",
+                Email = "vspalace@hotmail.ch",
+                WebSite = "htttp://www.vspalace.com"
+            };
+            // Add hotel
+            context.Hotels.Add(hotValPal);
+            context.SaveChanges();
             rooms = new List<Room>() {
                 new Room()
                 {
@@ -358,51 +403,295 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 3).FirstOrDefault()
                 }
             };
-            context.Hotels.AddOrUpdate(x => x.IdHotel, new Hotel()
-            {
-                IdHotel = 3,
-                Name = "Valais Palace",
-                Description = "Hotel Valais Palace Sion",
-                rooms = rooms
-            });
+            hotValPal.rooms = rooms;
+            context.SaveChanges();
+
             //Grand Duc Rooms
-            //context.Hotels.AddOrUpdate(x => x.IdHotel, new Hotel() { IdHotel = 4, Name = "Grand Duc" });
-            //rooms = new List<Room>() {
-            //    new Room()
-            //    {
-            //        IdRoom = 30,
-            //        Number = 100,
-            //        Type = 1,
-            //        Description = "Grand Duc single room 1",
-            //        HasHairdryer = true,
-            //        HasTV = true,
-            //        Price = 2000,
-            //        Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
-            //    },
-            //    new Room()
-            //    {
-            //        IdRoom = 31,
-            //        Number = 101,
-            //        Type = 1,
-            //        Description = "Grand Duc single room 2",
-            //        HasHairdryer = true,
-            //        HasTV = true,
-            //        Price = 2000,
-            //        Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
-            //    }
-            //    };
-            //context.Hotels.AddOrUpdate(x => x.IdHotel, new Hotel()
-            //{
-            //    IdHotel = 4,
-            //    Name = "Grand Duc",
-            //    Description = "Hotel Grand Duc Sion",
-            //    rooms = rooms
-            //});
+            Hotel hotGrandDuc = new Hotel()
+            {
+                IdHotel = 4,
+                Name = "Grand Duc",
+                Description = "Hotel Grand Duc Sion",
+                Location = "Sion",
+                Category = 4,
+                Wifi = true,
+                Parking = true,
+                Phone = "0273235002",
+                Email = "grandduc@hotmail.ch",
+                WebSite = "htttp://www.grandduc.com"
+            };
+            // Add hotel
+            context.Hotels.Add(hotGrandDuc);
+            context.SaveChanges();
+            rooms = new List<Room>() {
+                new Room()
+                {
+                    IdRoom = 30,
+                    Number = 100,
+                    Type = 1,
+                    Description = "Grand Duc single room 1",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 31,
+                    Number = 101,
+                    Type = 1,
+                    Description = "Grand Duc single room 2",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 32,
+                    Number = 102,
+                    Type = 1,
+                    Description = "Grand Duc single room 3",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 33,
+                    Number = 103,
+                    Type = 1,
+                    Description = "Grand Duc single room 4",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 34,
+                    Number = 200,
+                    Type = 2,
+                    Description = "Grand Duc double room 1",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 35,
+                    Number = 201,
+                    Type = 2,
+                    Description = "Grand Duc double room 2",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
+                }
+            };
+            hotGrandDuc.rooms = rooms;
+            context.SaveChanges();
 
-            //  This method will be called after migrating to the latest version.
+            //Walliser Palace
+            Hotel hotWall = new Hotel()
+            {
+                IdHotel = 5,
+                Name = "Walliser Palace",
+                Description = "Hotel Walliser Palace Brig",
+                Location = "Brig",
+                Category = 4,
+                Wifi = true,
+                Parking = true,
+                Phone = "0273285465",
+                Email = "walliserpalace@hotmail.ch",
+                WebSite = "htttp://www.walliserpalace.com",
+            };
+            // Add hotel
+            context.Hotels.Add(hotWall);
+            context.SaveChanges();
+            rooms = new List<Room>() {
+                new Room()
+                {
+                    IdRoom = 36,
+                    Number = 100,
+                    Type = 1,
+                    Description = "Walliser Palace single room 1",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 5).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 37,
+                    Number = 101,
+                    Type = 1,
+                    Description = "Walliser Palace single room 2",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 5).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 38,
+                    Number = 102,
+                    Type = 1,
+                    Description = "Walliser Palace single room 3",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 5).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 39,
+                    Number = 103,
+                    Type = 1,
+                    Description = "Walliser Palace single room 4",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 5).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 40,
+                    Number = 200,
+                    Type = 2,
+                    Description = "Walliser Palace double room 1",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 5).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 41,
+                    Number = 201,
+                    Type = 2,
+                    Description = "Walliser Palace double room 2",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 5).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 42,
+                    Number = 202,
+                    Type = 2,
+                    Description = "Walliser Palace double room 3",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 5).FirstOrDefault()
+                }
+            };
+            hotWall.rooms = rooms;
+            context.SaveChanges();
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+            //Mattherhorn Palace
+            Hotel hotMatt = new Hotel()
+            {
+                IdHotel = 6,
+                Name = "Mattherhorn Palace",
+                Description = "Hotel Mattherhorn Palace Brig",
+                Location = "Brig",
+                Category = 4,
+                Wifi = true,
+                Parking = true,
+                Phone = "0273238546",
+                Email = "mattherhornpalace@hotmail.ch",
+                WebSite = "htttp://www.mattherhornpalace.com"
+            };
+            // Add hotel
+            context.Hotels.Add(hotMatt);
+            context.SaveChanges();
+            rooms = new List<Room>() {
+                new Room()
+                {
+                    IdRoom = 43,
+                    Number = 100,
+                    Type = 1,
+                    Description = "Mattherhorn Palace single room 1",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 6).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 44,
+                    Number = 101,
+                    Type = 1,
+                    Description = "Mattherhorn Palace single room 2",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 6).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 45,
+                    Number = 102,
+                    Type = 1,
+                    Description = "Mattherhorn Palace single room 3",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 6).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 46,
+                    Number = 103,
+                    Type = 1,
+                    Description = "Walliser Palace single room 4",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 6).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 47,
+                    Number = 104,
+                    Type = 1,
+                    Description = "Mattherhorn Palace single room 5",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 6).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 48,
+                    Number = 200,
+                    Type = 2,
+                    Description = "Walliser Palace double room 1",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 6).FirstOrDefault()
+                },
+                new Room()
+                {
+                    IdRoom = 49,
+                    Number = 201,
+                    Type = 2,
+                    Description = "Walliser Palace double room 2",
+                    HasHairdryer = true,
+                    HasTV = true,
+                    Price = 2000,
+                    Hotel = context.Hotels.Where(a => a.IdHotel == 6).FirstOrDefault()
+                }
+            };
+            hotMatt.rooms = rooms;
+            context.SaveChanges();
+
         }
     }
 }
