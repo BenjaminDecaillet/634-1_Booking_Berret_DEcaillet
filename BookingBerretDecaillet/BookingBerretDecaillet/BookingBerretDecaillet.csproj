@@ -187,18 +187,20 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelsController.cs" />
     <Compile Include="Controllers\PicturesController.cs" />
+    <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HotelManagement.cs" />
-    <Compile Include="Migrations\201712291603495_Initial.cs" />
-    <Compile Include="Migrations\201712291603495_Initial.Designer.cs">
-      <DependentUpon>201712291603495_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201712301335552_Initial.cs" />
+    <Compile Include="Migrations\201712301335552_Initial.Designer.cs">
+      <DependentUpon>201712301335552_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\Picture.cs" />
+    <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -271,8 +273,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712291603495_Initial.resx">
-      <DependentUpon>201712291603495_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712301335552_Initial.resx">
+      <DependentUpon>201712301335552_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

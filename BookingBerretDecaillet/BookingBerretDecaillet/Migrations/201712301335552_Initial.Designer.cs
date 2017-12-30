@@ -13,7 +13,7 @@ namespace BookingBerretDecaillet.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201712291603495_Initial"; }
+            get { return "201712301335552_Initial"; }
         }
         
         string IMigrationMetadata.Source

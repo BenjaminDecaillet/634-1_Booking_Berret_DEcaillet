@@ -17,6 +17,8 @@ namespace BookingBerretDecaillet.Models
         public bool? HasTV { get; set; }
         public bool? HasHairdryer { get; set; }
         public Hotel Hotel { get; set; }
+        public ICollection<Picture> Pictures { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
 
         public override string ToString()
         {
@@ -27,7 +29,7 @@ namespace BookingBerretDecaillet.Models
                 " has wifi : " + Price +
                 " has parking : " + HasTV +
                 " phone: " + HasHairdryer +
-                " hotel: " + Hotel;
+                " hotel: " + Hotel.Name;
         }
     }
 }

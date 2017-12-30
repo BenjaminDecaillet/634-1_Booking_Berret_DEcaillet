@@ -692,6 +692,85 @@ namespace BookingBerretDecaillet.Migrations
             hotMatt.rooms = rooms;
             context.SaveChanges();
 
+            Picture pic1 = new Picture()
+            {
+                IdPicture = 1,
+                Url = "http://www.hotel-imperator.com/photos/chambres/original/classiques/chambre-hotel-prestige-quatre-etoiles.jpg"
+            };
+            Picture pic2 = new Picture()
+            {
+                IdPicture = 2,
+                Url = "http://img.ohmymag.com/hotel/chambre-d-hotel_204177_w460.jpg"
+            };
+            Picture pic3 = new Picture()
+            {
+                IdPicture = 3,
+                Url = "http://www.hotel-chaumiere.fr/uploads/media/hotel-chaumiere-honfleur-11763.jpg"
+            };
+            Picture pic4 = new Picture()
+            {
+                IdPicture = 4,
+                Url = "http://www.hoteldesprinces.com/images/chambres/cosy/chambre-cosy.jpg"
+            };
+            Picture pic5 = new Picture()
+            {
+                IdPicture = 5,
+                Url = "http://www.beausejour.ch/wp-content/uploads/galeries/chambre-DBK-3-1.jpg"
+            };
+            Picture pic6 = new Picture()
+            {
+                IdPicture = 6,
+                Url = "https://media-cdn.tripadvisor.com/media/photo-o/03/bb/4a/44/guest-room.jpg"
+            };
+
+            context.Pictures.Add(pic1);
+            context.Pictures.Add(pic2);
+            context.Pictures.Add(pic3);
+            context.Pictures.Add(pic4);
+            context.Pictures.Add(pic5);
+            context.Pictures.Add(pic6);
+            context.SaveChanges();
+
+            Room room;
+            List<Picture> piclist;
+            Picture pic;
+
+            room = context.Rooms.FirstOrDefault(r => r.IdRoom == 1);
+            pic = context.Pictures.Single(p => p.IdPicture == 1);
+            pic.Room = room;
+            piclist = new List<Picture>() { pic1 };
+            room.Pictures = piclist;
+
+            room = context.Rooms.FirstOrDefault(r => r.IdRoom == 10);
+            pic = context.Pictures.Single(p => p.IdPicture == 2);
+            pic.Room = room;
+            piclist = new List<Picture>() { pic };
+            room.Pictures = piclist;
+
+            room = context.Rooms.FirstOrDefault(r => r.IdRoom == 19);
+            pic = context.Pictures.Single(p => p.IdPicture == 3);
+            pic.Room = room;
+            piclist = new List<Picture>() { pic };
+            room.Pictures = piclist;
+
+            room = context.Rooms.Where(r => r.IdRoom == 30).FirstOrDefault();
+            pic = context.Pictures.Single(p => p.IdPicture == 4);
+            pic.Room = room;
+            piclist = new List<Picture>() { pic };
+            room.Pictures = piclist;
+
+            room = context.Rooms.Where(r => r.IdRoom == 36).FirstOrDefault();
+            pic = context.Pictures.Single(p => p.IdPicture == 5);
+            pic.Room = room;
+            piclist = new List<Picture>() { pic };
+            room.Pictures = piclist;
+
+            room = context.Rooms.Where(r => r.IdRoom == 43).FirstOrDefault();
+            pic = context.Pictures.Single(p => p.IdPicture == 6);
+            pic.Room = room;
+            piclist = new List<Picture>() { pic };
+            room.Pictures = piclist;
+            context.SaveChanges();
         }
     }
 }
