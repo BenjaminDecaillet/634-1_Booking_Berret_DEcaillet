@@ -13,6 +13,7 @@ using BookingBerretDecaillet.Models;
 
 namespace BookingBerretDecaillet.Controllers
 {
+    [Route("api/[controller]")]
     public class RoomsController : ApiController
     {
         private HotelManagement db = new HotelManagement();
@@ -23,9 +24,25 @@ namespace BookingBerretDecaillet.Controllers
             return db.Rooms;
         }
 
+        // GET: api/RoomsofHotel/5
+        public IQueryable<Room> GetRoomsOfHotel(int id)
+        {
+            Hotel hotel = db.Hotels.Find(id);
+            List<Room> rooms = new List<Room>();
+            List<Room> allrooms =  (List<Room>) GetRooms();
+            foreach (Room r in allrooms)
+            {
+                if (r.Hotel == hotel)
+                {
+                    rooms.Add(r);
+                }
+            }
+            return (IQueryable<Room>) rooms;
+        }
+
         // GET: api/Rooms/5
         [ResponseType(typeof(Room))]
-        public IHttpActionResult GetRoom(int id)
+        public IHttpActionResult GetRoomById(int id)
         {
             Room room = db.Rooms.Find(id);
             if (room == null)
@@ -36,6 +53,70 @@ namespace BookingBerretDecaillet.Controllers
             return Ok(room);
         }
 
+        // GET: api/Rooms/checkin=date&checkout=date
+        public IQueryable<Room> GetRoomByDate(DateTime checkin, DateTime checkout)
+        {
+            List<Room> allrooms = (List<Room>)GetRooms();
+            List<Room> availableRooms = new List<Room>();
+            List<Reservation> reservations;
+            Reservation lastReservation;
+
+            foreach (Room r in allrooms)
+            {
+                bool roomAvailable = true;
+                //Get the last reservation for the room
+                reservations = (List<Reservation>) r.Reservations;
+                if (reservations.Count > 0)
+                {
+                    List<Reservation> resTest = new List<Reservation>();
+                    lastReservation = reservations.First();
+                    
+                    foreach (Reservation res in reservations)
+                    {
+                        if (!(res.CheckOut < checkin && res.CheckIn < checkin) ||
+                            !(res.CheckIn > checkout && res.CheckOut > checkout))
+                        {
+                            roomAvailable = false;
+                        }
+                    }
+
+                }
+                //If the room will be checked out for the checkin date add room to available rooms
+                //Or the room is reserved for before the check in of the last reservation
+                if (roomAvailable)
+                    {
+                        availableRooms.Add(r);
+                    }
+            }
+
+            return (IQueryable<Room>) availableRooms;
+        }
+
+        // GET: api/Rooms/location
+        public IQueryable<Room> GetRoomsByLocation(string location)
+        {
+            List<Room> allrooms = (List<Room>)GetRooms();
+            List<Room> availableRooms = new List<Room>();
+            foreach (Room r in allrooms)
+            {
+                if (r.Hotel.Location == location)
+                {
+                    availableRooms.Add(r);
+                }
+            }
+            return (IQueryable<Room>) availableRooms;
+        }
+        // GET: api/Rooms/5
+        public IQueryable<Room> GetRoomSearch(DateTime checkin, DateTime checkout,string location)
+        {
+            IQueryable<Room> rooms;
+            if (string.IsNullOrEmpty(location))
+                rooms = GetRoomByDate(checkin, checkout);
+            else
+                rooms = GetRoomsByLocation(location);
+
+            return rooms;
+        }
         // PUT: api/Rooms/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutRoom(int id, Room room)
