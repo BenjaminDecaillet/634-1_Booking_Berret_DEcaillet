@@ -15,6 +15,7 @@ namespace BookingBerretDecaillet
         public HotelManagement()
             : base("name=HotelManagement")
         {
+            this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
         public System.Data.Entity.DbSet<BookingBerretDecaillet.Models.Hotel> Hotels { get; set; }

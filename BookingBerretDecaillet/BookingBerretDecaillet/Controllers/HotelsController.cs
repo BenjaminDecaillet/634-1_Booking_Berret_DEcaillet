@@ -13,17 +13,20 @@ using BookingBerretDecaillet.Models;
 
 namespace BookingBerretDecaillet.Controllers
 {
+    [RoutePrefix("api/hotels")]
     public class HotelsController : ApiController
     {
         private HotelManagement db = new HotelManagement();
 
         // GET: api/Hotels
+        [Route("")]
         public IQueryable<Hotel> GetHotels()
         {
             return db.Hotels;
         }
 
         // GET: api/Hotels/5
+        [Route("{id:int}")]
         [ResponseType(typeof(Hotel))]
         public IHttpActionResult GetHotel(int id)
         {
@@ -34,6 +37,14 @@ namespace BookingBerretDecaillet.Controllers
             }
 
             return Ok(hotel);
+        }
+        
+        // GET: api/Hotels/Sion
+        [Route("{location}")]
+        public IQueryable<Hotel> GetHotelByLocation(string location)
+        {
+            return db.Hotels
+                .Where(h => h.Location.Equals(location, StringComparison.OrdinalIgnoreCase));
         }
 
         // PUT: api/Hotels/5

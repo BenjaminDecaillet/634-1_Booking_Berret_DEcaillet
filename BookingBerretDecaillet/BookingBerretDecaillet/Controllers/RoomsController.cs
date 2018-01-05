@@ -13,34 +13,30 @@ using BookingBerretDecaillet.Models;
 
 namespace BookingBerretDecaillet.Controllers
 {
-    [Route("api/[controller]")]
+    [RoutePrefix("api/rooms")]
     public class RoomsController : ApiController
     {
         private HotelManagement db = new HotelManagement();
 
         // GET: api/Rooms
+        [Route("")]
         public IQueryable<Room> GetRooms()
         {
-            return db.Rooms;
-        }
-
-        // GET: api/RoomsofHotel/5
-        public IQueryable<Room> GetRoomsOfHotel(int id)
-        {
-            Hotel hotel = db.Hotels.Find(id);
-            List<Room> rooms = new List<Room>();
-            List<Room> allrooms =  (List<Room>) GetRooms();
-            foreach (Room r in allrooms)
-            {
-                if (r.Hotel == hotel)
-                {
-                    rooms.Add(r);
-                }
-            }
-            return (IQueryable<Room>) rooms;
+            return db.Rooms
+                .Include(r => r.Hotel);
         }
 
         // GET: api/Rooms/5
+        [Route("hotel/{id:int}")]
+        public IQueryable<Room> GetRoomsOfHotel(int id)
+        {
+
+            return db.Rooms
+                    .Where(r => r.Hotel.IdHotel == id);
+        }
+
+        // GET: api/Rooms/5
+        [Route("{id:int}")]
         [ResponseType(typeof(Room))]
         public IHttpActionResult GetRoomById(int id)
         {
@@ -52,11 +48,16 @@ namespace BookingBerretDecaillet.Controllers
 
             return Ok(room);
         }
-
-        // GET: api/Rooms/checkin=date&checkout=date
+        
+        /**
+         * TODO Find correct SQL statement for the db return
+         * 
+         * */
+        // GET: api/Rooms/checkin&checkout
+        [Route("date/{pubdate:datetime:regex(\\d{4}-\\d{2}-\\d{2})}&{pubdate:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
         public IQueryable<Room> GetRoomByDate(DateTime checkin, DateTime checkout)
         {
-            List<Room> allrooms = (List<Room>)GetRooms();
+            List<Room> allrooms = GetRooms().ToList();
             List<Room> availableRooms = new List<Room>();
             List<Reservation> reservations;
             Reservation lastReservation;
@@ -65,7 +66,7 @@ namespace BookingBerretDecaillet.Controllers
             {
                 bool roomAvailable = true;
                 //Get the last reservation for the room
-                reservations = (List<Reservation>) r.Reservations;
+                reservations =  r.Reservations.ToList();
                 if (reservations.Count > 0)
                 {
                     List<Reservation> resTest = new List<Reservation>();
@@ -81,8 +82,7 @@ namespace BookingBerretDecaillet.Controllers
                     }
 
                 }
-                //If the room will be checked out for the checkin date add room to available rooms
-                //Or the room is reserved for before the check in of the last reservation
+
                 if (roomAvailable)
                     {
                         availableRooms.Add(r);
@@ -92,31 +92,14 @@ namespace BookingBerretDecaillet.Controllers
             return (IQueryable<Room>) availableRooms;
         }
 
-        // GET: api/Rooms/location
+        // GET: api/Rooms/sion
+        [Route("{location}")]
         public IQueryable<Room> GetRoomsByLocation(string location)
         {
-            List<Room> allrooms = (List<Room>)GetRooms();
-            List<Room> availableRooms = new List<Room>();
-            foreach (Room r in allrooms)
-            {
-                if (r.Hotel.Location == location)
-                {
-                    availableRooms.Add(r);
-                }
-            }
-            return (IQueryable<Room>) availableRooms;
+            return db.Rooms
+                    .Where(r => r.Hotel.Location.Equals(location, StringComparison.OrdinalIgnoreCase));
         }
-        // GET: api/Rooms/5
-        public IQueryable<Room> GetRoomSearch(DateTime checkin, DateTime checkout,string location)
-        {
-            IQueryable<Room> rooms;
-            if (string.IsNullOrEmpty(location))
-                rooms = GetRoomByDate(checkin, checkout);
-            else
-                rooms = GetRoomsByLocation(location);
 
-            return rooms;
-        }
         // PUT: api/Rooms/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutRoom(int id, Room room)
