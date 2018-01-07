@@ -131,12 +131,12 @@ namespace BookingBerretDecaillet.Controllers
                     .Where(r => r.Hotel.Location.Equals(location, StringComparison.OrdinalIgnoreCase));
         }
 
-        // GET: api/Rooms/advanced?checkin=2018-01-01&checkou=2018-02-02&location=Sion...
+        // GET: api/Rooms/advanced?checkin=2018-01-01&checkout=2018-02-02&location=Sion...
         [Route("advanced")]
         public IEnumerable<Room> GetAdvancedSearch(DateTime checkin, DateTime checkout, string location = "empty", string name = "empty",
             int type=3,Boolean wifi=false, Boolean hairdryer=false, Boolean parking=false, Boolean tv=false,int category=9)
         {
-            //List<Room> allrooms = GetRooms().ToList();
+
             List<Room> availableRooms = GetRoomByDate(checkin, checkout).ToList();
             List<Room> resultRooms = new List<Room>();
             Boolean test;
