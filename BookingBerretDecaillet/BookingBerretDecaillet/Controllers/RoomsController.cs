@@ -131,6 +131,112 @@ namespace BookingBerretDecaillet.Controllers
                     .Where(r => r.Hotel.Location.Equals(location, StringComparison.OrdinalIgnoreCase));
         }
 
+        // GET: api/Rooms/advanced?checkin=2018-01-01&checkou=2018-02-02&location=Sion...
+        [Route("advanced")]
+        public IEnumerable<Room> GetAdvancedSearch(DateTime checkin, DateTime checkout, string location = "empty", string name = "empty",
+            int type=3,Boolean wifi=false, Boolean hairdryer=false, Boolean parking=false, Boolean tv=false,int category=9)
+        {
+            //List<Room> allrooms = GetRooms().ToList();
+            List<Room> availableRooms = GetRoomByDate(checkin, checkout).ToList();
+            List<Room> resultRooms = new List<Room>();
+            Boolean test;
+            string empty = "empty";
+
+            foreach (Room r in availableRooms)
+            {
+                //initalisation of test
+                test = true;
+
+                //test on the location
+                if (!location.Equals(empty))
+                {
+                    if (!r.Hotel.Location.Equals(location, StringComparison.OrdinalIgnoreCase))
+                    {
+                        test = false;
+                    }
+                }
+                if (test)
+                {
+                    //test on the name
+                    if (!name.Equals(empty))
+                    {
+                        if (!r.Hotel.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            test = false;
+                        }
+                    }
+                    if (test)
+                    {
+                        // test on the type
+                        if (type != 3)
+                        {
+                            if (r.Type != type)
+                            {
+                                test = false;
+                            }
+                            if(test)
+                            {
+                                if(wifi)
+                                {
+                                    if(r.Hotel.Wifi==false)
+                                    {
+                                        test = false;
+                                    }
+                                    if (test)
+                                    {
+                                        if (parking)
+                                        {
+                                            if (r.Hotel.Parking == false)
+                                            {
+                                                test = false;
+                                            }
+                                            if (test)
+                                            {
+                                                if (hairdryer)
+                                                {
+                                                    if (r.HasHairdryer == false)
+                                                    {
+                                                        test = false;
+                                                    }
+                                                    if (test)
+                                                    {
+                                                        if (tv)
+                                                        {
+                                                            if (r.HasTV == false)
+                                                            {
+                                                                test = false;
+                                                            }
+                                                            if (test)
+                                                            {
+                                                                if (category!=9)
+                                                                {
+                                                                    if (r.Hotel.Category != category)
+                                                                    {
+                                                                        test = false;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (test)
+                {
+                    resultRooms.Add(r);
+                }
+            }
+
+            return resultRooms;
+        }
+
+
         // PUT: api/Rooms/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutRoom(int id, Room room)
