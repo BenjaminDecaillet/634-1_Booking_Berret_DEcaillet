@@ -101,7 +101,12 @@ namespace BookingBerretDecaillet.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Pictures.Add(picture);
+            db.Pictures.Add(new Picture()
+            {
+                IdPicture = picture.IdPicture,
+                Url = picture.Url,
+                Room = db.Rooms.Where(r => r.IdRoom == picture.Room.IdRoom).FirstOrDefault()
+            });
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = picture.IdPicture }, picture);

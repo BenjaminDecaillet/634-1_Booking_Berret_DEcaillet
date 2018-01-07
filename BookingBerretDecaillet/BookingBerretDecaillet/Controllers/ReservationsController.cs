@@ -107,7 +107,6 @@ namespace BookingBerretDecaillet.Controllers
                 CheckOut = reservation.CheckOut,
                 Hotel = db.Hotels.Where(h => h.IdHotel==reservation.Hotel.IdHotel).FirstOrDefault(),
                 RoomsReservation = rooms
-
             });
             db.SaveChanges();
 

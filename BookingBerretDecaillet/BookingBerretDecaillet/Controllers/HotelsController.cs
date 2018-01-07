@@ -100,7 +100,25 @@ namespace BookingBerretDecaillet.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Hotels.Add(hotel);
+            List<Room> rooms = new List<Room>();
+            foreach (Room r in hotel.Rooms)
+            {
+                rooms.Add(db.Rooms.Where(c => c.IdRoom == r.IdRoom).FirstOrDefault());
+            }
+            db.Hotels.Add(new Hotel()
+            {
+                IdHotel = hotel.IdHotel,
+                Description = hotel.Description,
+                Location = hotel.Location,
+                Category = hotel.Category,
+                Wifi = hotel.Wifi,
+                Parking = hotel.Parking,
+                Email = hotel.Email,
+                Name = hotel.Name,
+                Phone = hotel.Phone,
+                WebSite = hotel.WebSite,
+                Rooms = rooms
+        });
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = hotel.IdHotel }, hotel);

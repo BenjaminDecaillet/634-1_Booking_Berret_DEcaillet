@@ -284,8 +284,30 @@ namespace BookingBerretDecaillet.Controllers
             {
                 return BadRequest(ModelState);
             }
+            List<Picture> pics = new List<Picture>();
+            foreach (Picture pic in room.Pictures)
+            {
+                pics.Add(db.Pictures.Where(p => p.IdPicture == pic.IdPicture).FirstOrDefault());
+            }
 
-            db.Rooms.Add(room);
+            List<Reservation> reserv = new List<Reservation>();
+            foreach (Reservation r in room.Reservations)
+            {
+                reserv.Add(db.Reservations.Where(c => c.IdReservation == r.IdReservation).FirstOrDefault());
+            }
+            db.Rooms.Add(new Room()
+            {
+                IdRoom = room.IdRoom,
+                Number = room.Number,
+                Description = room.Description,
+                Type = room.Type,
+                Price = room.Price,
+                HasTV = room.HasTV,
+                HasHairdryer = room.HasHairdryer,
+                Hotel = db.Hotels.Where(h => h.IdHotel == room.Hotel.IdHotel).FirstOrDefault(),
+                Pictures = pics,
+                Reservations = reserv
+             });
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = room.IdRoom }, room);
