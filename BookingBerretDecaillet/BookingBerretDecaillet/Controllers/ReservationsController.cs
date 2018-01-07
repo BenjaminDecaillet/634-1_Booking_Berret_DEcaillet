@@ -21,7 +21,7 @@ namespace BookingBerretDecaillet.Controllers
         public IQueryable<Reservation> GetReservations()
         {
             return db.Reservations
-                .Include(r => r.RoomsReservation)
+                .Include(r => r.Rooms)
                 .Include(r => r.Hotel);
         }
 
@@ -93,7 +93,7 @@ namespace BookingBerretDecaillet.Controllers
                 return BadRequest(ModelState);
             }
             List<Room> rooms = new List<Room>();
-            foreach (Room r in reservation.RoomsReservation)
+            foreach (Room r in reservation.Rooms)
             {
                 rooms.Add(db.Rooms.Where(c => c.IdRoom == r.IdRoom).FirstOrDefault());
             }
@@ -106,7 +106,7 @@ namespace BookingBerretDecaillet.Controllers
                 CheckIn = reservation.CheckIn,
                 CheckOut = reservation.CheckOut,
                 Hotel = db.Hotels.Where(h => h.IdHotel==reservation.Hotel.IdHotel).FirstOrDefault(),
-                RoomsReservation = rooms
+                Rooms = rooms
             });
             db.SaveChanges();
 
