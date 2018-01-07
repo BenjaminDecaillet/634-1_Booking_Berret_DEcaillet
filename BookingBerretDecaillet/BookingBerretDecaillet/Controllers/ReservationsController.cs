@@ -87,21 +87,30 @@ namespace BookingBerretDecaillet.Controllers
         [ResponseType(typeof(Reservation))]
         public IHttpActionResult PostReservation(Reservation reservation)
         {
-            HotelsController hc = new HotelsController();
-            RoomsController rc = new RoomsController();
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            Reservation reservationPost = reservation;
-            ICollection<Room> rooms = reservation.RoomsReservation;
+            List<Room> rooms = new List<Room>();
+            foreach (Room r in reservation.RoomsReservation)
+            {
+                rooms.Add(db.Rooms.Where(c => c.IdRoom == r.IdRoom).FirstOrDefault());
+            }
 
-            db.Reservations.Add(reservationPost);
+            db.Reservations.Add(new Reservation()
+            {
+                IdReservation = reservation.IdReservation,
+                Fisrtname = reservation.Fisrtname,
+                Lastname = reservation.Lastname,
+                CheckIn = reservation.CheckIn,
+                CheckOut = reservation.CheckOut,
+                Hotel = db.Hotels.Where(h => h.IdHotel==reservation.Hotel.IdHotel).FirstOrDefault(),
+                RoomsReservation = rooms
+
+            });
             db.SaveChanges();
-            reservationPost.RoomsReservation = rooms;
-            reservationPost.Hotel = db.Hotels.Where(h => h.IdHotel == reservation.Hotel.IdHotel).FirstOrDefault();
-            db.SaveChanges();
+
             return CreatedAtRoute("DefaultApi", new { id = reservation.IdReservation }, reservation);
         }
 
