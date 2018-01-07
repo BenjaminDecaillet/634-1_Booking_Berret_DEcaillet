@@ -96,12 +96,11 @@ namespace BookingBerretDecaillet.Controllers
             }
             Reservation reservationPost = reservation;
             ICollection<Room> rooms = reservation.RoomsReservation;
-            Hotel hotel = reservation.Hotel;
 
             db.Reservations.Add(reservationPost);
             db.SaveChanges();
             reservationPost.RoomsReservation = rooms;
-            reservationPost.Hotel = hotel;
+            reservationPost.Hotel = db.Hotels.Where(h => h.IdHotel == reservation.Hotel.IdHotel).FirstOrDefault();
             db.SaveChanges();
             return CreatedAtRoute("DefaultApi", new { id = reservation.IdReservation }, reservation);
         }
