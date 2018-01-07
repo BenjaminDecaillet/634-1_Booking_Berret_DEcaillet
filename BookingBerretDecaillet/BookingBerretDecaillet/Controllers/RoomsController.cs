@@ -134,7 +134,7 @@ namespace BookingBerretDecaillet.Controllers
         // GET: api/Rooms/advanced?checkin=2018-01-01&checkout=2018-02-02&location=Sion...
         [Route("advanced")]
         public IEnumerable<Room> GetAdvancedSearch(DateTime checkin, DateTime checkout, string location = "empty", string name = "empty",
-            int type=3,Boolean wifi=false, Boolean hairdryer=false, Boolean parking=false, Boolean tv=false,int category=9)
+            int type=3,Boolean wifi=false, Boolean hairdryer=false, Boolean parking=false, Boolean tv=false,int category=9,decimal minprice=0, decimal maxprice = 100000)
         {
 
             List<Room> availableRooms = GetRoomByDate(checkin, checkout).ToList();
@@ -154,6 +154,10 @@ namespace BookingBerretDecaillet.Controllers
                     {
                         test = false;
                     }
+                }
+                if(r.Price>maxprice || r.Price<minprice)
+                {
+                    test = false;
                 }
                 if (test)
                 {

@@ -21,7 +21,8 @@ namespace BookingBerretDecaillet.Controllers
         public IQueryable<Reservation> GetReservations()
         {
             return db.Reservations
-                .Include(r => r.RoomsReservation);
+                .Include(r => r.RoomsReservation)
+                .Include(r => r.Hotel);
         }
 
         // GET: api/Reservations/5
@@ -86,14 +87,22 @@ namespace BookingBerretDecaillet.Controllers
         [ResponseType(typeof(Reservation))]
         public IHttpActionResult PostReservation(Reservation reservation)
         {
+            HotelsController hc = new HotelsController();
+            RoomsController rc = new RoomsController();
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            Reservation reservationPost = reservation;
+            ICollection<Room> rooms = reservation.RoomsReservation;
+            Hotel hotel = reservation.Hotel;
 
-            db.Reservations.Add(reservation);
+            db.Reservations.Add(reservationPost);
             db.SaveChanges();
-
+            reservationPost.RoomsReservation = rooms;
+            reservationPost.Hotel = hotel;
+            db.SaveChanges();
             return CreatedAtRoute("DefaultApi", new { id = reservation.IdReservation }, reservation);
         }
 
