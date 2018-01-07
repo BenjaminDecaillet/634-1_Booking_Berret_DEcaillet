@@ -105,7 +105,7 @@ namespace BookingBerretDecaillet.Controllers
                 Lastname = reservation.Lastname,
                 CheckIn = reservation.CheckIn,
                 CheckOut = reservation.CheckOut,
-                Hotel = db.Hotels.Where(h => h.IdHotel==reservation.Hotel.IdHotel).FirstOrDefault(),
+                //Hotel = db.Hotels.Where(h => h.IdHotel==reservation.Hotel.IdHotel).FirstOrDefault(),
                 Rooms = rooms
             });
             db.SaveChanges();

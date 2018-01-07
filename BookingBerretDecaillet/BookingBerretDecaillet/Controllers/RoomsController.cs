@@ -24,7 +24,8 @@ namespace BookingBerretDecaillet.Controllers
         public IQueryable<Room> GetRooms()
         {
             return db.Rooms
-                .Include(r => r.Hotel);
+                .Include(r => r.Hotel)
+                .Include(r => r.Pictures);
         }
 
         // GET: api/Rooms/5
@@ -34,7 +35,8 @@ namespace BookingBerretDecaillet.Controllers
 
             return db.Rooms
                 .Where(r => r.Hotel.IdHotel == id)
-                .Include(r => r.Hotel);
+                .Include(r => r.Hotel)
+                .Include(r => r.Pictures);
         }
 
         // GET: api/Rooms/5
