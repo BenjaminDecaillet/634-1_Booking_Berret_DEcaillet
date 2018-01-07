@@ -25,7 +25,8 @@ namespace BookingBerretDecaillet.Controllers
         {
             return db.Rooms
                 .Include(r => r.Hotel)
-                .Include(r => r.Pictures);
+                .Include(r => r.Pictures)
+                .Include(r => r.Reservations);
         }
 
         // GET: api/Rooms/5
