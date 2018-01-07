@@ -104,6 +104,25 @@ namespace BookingBerretDecaillet.Controllers
             return availableRooms;
         }
 
+        // GET: api/Rooms/checkin/checkout/location
+        [Route("dateloc/{location}/{checkin:datetime:regex(\\d{4}-\\d{2}-\\d{2})}/{checkout:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
+        public IEnumerable<Room> GetRoomByDateAndLocation(DateTime checkin, DateTime checkout,string location)
+        {
+            //List<Room> allrooms = GetRooms().ToList();
+            List<Room> availableRooms = GetRoomByDate(checkin,checkout).ToList();
+            List<Room> resultRooms = new List<Room>();
+
+            foreach (Room r in availableRooms)
+            {
+                if(r.Hotel.Location.Equals(location, StringComparison.OrdinalIgnoreCase))
+                {
+                    resultRooms.Add(r);
+                }
+            }
+
+            return resultRooms;
+        }
+
         // GET: api/Rooms/sion
         [Route("{location}")]
         public IQueryable<Room> GetRoomsByLocation(string location)
