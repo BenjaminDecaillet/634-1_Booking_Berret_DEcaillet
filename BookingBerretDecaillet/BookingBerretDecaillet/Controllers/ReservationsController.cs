@@ -20,14 +20,25 @@ namespace BookingBerretDecaillet.Controllers
         // GET: api/Reservations
         public IQueryable<Reservation> GetReservations()
         {
-            return db.Reservations;
+            return db.Reservations
+                .Include(r => r.RoomsReservation);
         }
 
         // GET: api/Reservations/5
         [ResponseType(typeof(Reservation))]
         public IHttpActionResult GetReservation(int id)
         {
-            Reservation reservation = db.Reservations.Find(id);
+            Reservation reservation = null;
+            List<Reservation> reservations = GetReservations().ToList();
+
+            foreach (Reservation r in reservations)
+            {
+                if(r.IdReservation==id)
+                {
+                    reservation = r;
+                }
+            }
+
             if (reservation == null)
             {
                 return NotFound();

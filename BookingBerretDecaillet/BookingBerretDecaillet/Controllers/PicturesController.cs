@@ -22,7 +22,8 @@ namespace BookingBerretDecaillet.Controllers
         [Route("")]
         public IQueryable<Picture> GetPictures()
         {
-            return db.Pictures;
+            return db.Pictures
+                .Include(p => p.Room);
         }
 
         // GET: api/pictures/5
@@ -31,7 +32,8 @@ namespace BookingBerretDecaillet.Controllers
         {
 
             return db.Pictures
-                    .Where(p => p.Room.IdRoom == id);
+                    .Where(p => p.Room.IdRoom == id)
+                    .Include(p => p.Room);
         }
 
         // GET: api/Pictures/5
@@ -39,7 +41,14 @@ namespace BookingBerretDecaillet.Controllers
         [ResponseType(typeof(Picture))]
         public IHttpActionResult GetPicture(int id)
         {
-            Picture picture = db.Pictures.Find(id);
+            Picture picture = null;
+            List<Picture> pictures = GetPictures().ToList();
+            foreach (Picture p in pictures)
+            {
+                if (p.IdPicture == id)
+                    picture = p;
+            }
+
             if (picture == null)
             {
                 return NotFound();

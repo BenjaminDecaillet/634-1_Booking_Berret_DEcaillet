@@ -29,11 +29,12 @@ namespace BookingBerretDecaillet.Controllers
 
         // GET: api/Rooms/5
         [Route("hotel/{id:int}")]
-        public IQueryable<Room> GetRoomsOfHotel(int id)
+        public IEnumerable<Room> GetRoomsOfHotel(int id)
         {
 
             return db.Rooms
-                    .Where(r => r.Hotel.IdHotel == id);
+                .Where(r => r.Hotel.IdHotel == id)
+                .Include(r => r.Hotel);
         }
 
         // GET: api/Rooms/5
@@ -41,7 +42,17 @@ namespace BookingBerretDecaillet.Controllers
         [ResponseType(typeof(Room))]
         public IHttpActionResult GetRoomById(int id)
         {
-            Room room = db.Rooms.Find(id);
+            List<Room> allrooms = GetRooms().ToList();
+            Room room = null;
+            foreach (Room r in allrooms)
+            {
+                if(r.IdRoom==id)
+                {
+                   room = r;
+                }
+            }
+               //room = db.Rooms
+               // .Find(id);
             if (room == null)
             {
                 return NotFound();

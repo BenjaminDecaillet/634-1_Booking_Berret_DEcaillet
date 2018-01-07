@@ -22,7 +22,8 @@ namespace BookingBerretDecaillet.Controllers
         [Route("")]
         public IQueryable<Hotel> GetHotels()
         {
-            return db.Hotels;
+            return db.Hotels
+                .Include(h => h.Rooms);
         }
 
         // GET: api/Hotels/5
@@ -30,7 +31,14 @@ namespace BookingBerretDecaillet.Controllers
         [ResponseType(typeof(Hotel))]
         public IHttpActionResult GetHotel(int id)
         {
-            Hotel hotel = db.Hotels.Find(id);
+            Hotel hotel = null;
+            List<Hotel> hotels = GetHotels().ToList();
+            foreach (Hotel h in hotels)
+            {
+                if (h.IdHotel == id)
+                    hotel = h;
+            }
+
             if (hotel == null)
             {
                 return NotFound();
@@ -44,7 +52,8 @@ namespace BookingBerretDecaillet.Controllers
         public IQueryable<Hotel> GetHotelByLocation(string location)
         {
             return db.Hotels
-                .Where(h => h.Location.Equals(location, StringComparison.OrdinalIgnoreCase));
+                .Where(h => h.Location.Equals(location, StringComparison.OrdinalIgnoreCase))
+                .Include(h => h.Rooms);
         }
 
         // PUT: api/Hotels/5
