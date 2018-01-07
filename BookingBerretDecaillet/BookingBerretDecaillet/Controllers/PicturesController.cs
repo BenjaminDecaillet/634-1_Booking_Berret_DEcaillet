@@ -13,17 +13,29 @@ using BookingBerretDecaillet.Models;
 
 namespace BookingBerretDecaillet.Controllers
 {
+    [RoutePrefix("api/pictures")]
     public class PicturesController : ApiController
     {
         private HotelManagement db = new HotelManagement();
 
-        // GET: api/Pictures
+        // GET: api/pictures
+        [Route("")]
         public IQueryable<Picture> GetPictures()
         {
             return db.Pictures;
         }
 
+        // GET: api/pictures/5
+        [Route("room/{id:int}")]
+        public IQueryable<Picture> GetPictureOfRoom(int id)
+        {
+
+            return db.Pictures
+                    .Where(p => p.Room.IdRoom == id);
+        }
+
         // GET: api/Pictures/5
+        [Route("{id:int}")]
         [ResponseType(typeof(Picture))]
         public IHttpActionResult GetPicture(int id)
         {

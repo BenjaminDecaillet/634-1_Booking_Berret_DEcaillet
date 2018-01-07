@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using BookingBerretDecaillet;
 using BookingBerretDecaillet.Models;
+using Newtonsoft.Json;
 
 namespace BookingBerretDecaillet.Controllers
 {
@@ -49,29 +50,29 @@ namespace BookingBerretDecaillet.Controllers
             return Ok(room);
         }
         
-        /**
-         * TODO Find correct SQL statement for the db return
-         * 
-         * */
-        // GET: api/Rooms/checkin&checkout
-        [Route("date/{pubdate:datetime:regex(\\d{4}-\\d{2}-\\d{2})}&{pubdate:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
-        public IQueryable<Room> GetRoomByDate(DateTime checkin, DateTime checkout)
+        // GET: api/Rooms/checkin/checkout
+        [Route("date/{checkin:datetime:regex(\\d{4}-\\d{2}-\\d{2})}/{checkout:datetime:regex(\\d{4}-\\d{2}-\\d{2})}")]
+        public IEnumerable<Room> GetRoomByDate(DateTime checkin, DateTime checkout)
         {
             List<Room> allrooms = GetRooms().ToList();
             List<Room> availableRooms = new List<Room>();
-            List<Reservation> reservations;
+            List<Reservation> reservations = new List<Reservation>() ;
             Reservation lastReservation;
 
             foreach (Room r in allrooms)
             {
                 bool roomAvailable = true;
-                //Get the last reservation for the room
-                reservations =  r.Reservations.ToList();
-                if (reservations.Count > 0)
+
+                if(r.Reservations!=null)
+                {
+                    reservations = r.Reservations.ToList();
+                }
+                //Get the last reservation for the 
+                if (reservations.Count<Reservation>() > 0)
                 {
                     List<Reservation> resTest = new List<Reservation>();
                     lastReservation = reservations.First();
-                    
+
                     foreach (Reservation res in reservations)
                     {
                         if (!(res.CheckOut < checkin && res.CheckIn < checkin) ||
@@ -84,12 +85,12 @@ namespace BookingBerretDecaillet.Controllers
                 }
 
                 if (roomAvailable)
-                    {
-                        availableRooms.Add(r);
-                    }
+                {
+                    availableRooms.Add(r);
+                }
             }
 
-            return (IQueryable<Room>) availableRooms;
+            return availableRooms;
         }
 
         // GET: api/Rooms/sion

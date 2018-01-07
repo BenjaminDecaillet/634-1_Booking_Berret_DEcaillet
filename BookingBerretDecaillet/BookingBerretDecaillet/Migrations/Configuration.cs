@@ -138,7 +138,7 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 1).FirstOrDefault()
                 }
                 };
-            hotOct.rooms = rooms;
+            hotOct.Rooms = rooms;
             context.SaveChanges();
 
 
@@ -260,7 +260,7 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 2).FirstOrDefault()
                 }
             };
-            hotConst.rooms = rooms;
+            hotConst.Rooms = rooms;
             context.SaveChanges();
 
             //Valais Palace
@@ -403,7 +403,7 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 3).FirstOrDefault()
                 }
             };
-            hotValPal.rooms = rooms;
+            hotValPal.Rooms = rooms;
             context.SaveChanges();
 
             //Grand Duc Rooms
@@ -491,7 +491,7 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 4).FirstOrDefault()
                 }
             };
-            hotGrandDuc.rooms = rooms;
+            hotGrandDuc.Rooms = rooms;
             context.SaveChanges();
 
             //Walliser Palace
@@ -590,7 +590,7 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 5).FirstOrDefault()
                 }
             };
-            hotWall.rooms = rooms;
+            hotWall.Rooms = rooms;
             context.SaveChanges();
 
             //Mattherhorn Palace
@@ -689,7 +689,7 @@ namespace BookingBerretDecaillet.Migrations
                     Hotel = context.Hotels.Where(a => a.IdHotel == 6).FirstOrDefault()
                 }
             };
-            hotMatt.rooms = rooms;
+            hotMatt.Rooms = rooms;
             context.SaveChanges();
 
             Picture pic1 = new Picture()

@@ -38,7 +38,7 @@ namespace BookingBerretDecaillet.Controllers
 
             return Ok(hotel);
         }
-        
+
         // GET: api/Hotels/Sion
         [Route("{location}")]
         public IQueryable<Hotel> GetHotelByLocation(string location)

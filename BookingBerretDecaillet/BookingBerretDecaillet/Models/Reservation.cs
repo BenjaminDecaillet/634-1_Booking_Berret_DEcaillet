@@ -17,7 +17,7 @@ namespace BookingBerretDecaillet.Models
         public DateTime CheckIn { get; set; }
         [Column(TypeName = "datetime2")]
         public DateTime CheckOut { get; set; }
-        public ICollection<Room> Rooms { get; set; }
+        public ICollection<Room> RoomsReservation { get; set; }
         public Hotel Hotel { get; set; }
 
         public override string ToString()
@@ -26,7 +26,7 @@ namespace BookingBerretDecaillet.Models
             str += "idReservation : " + IdReservation +
                 "Hotel : " + Hotel.Name +
                 " Room : ";
-            foreach (Room r in Rooms)
+            foreach (Room r in RoomsReservation)
             {
                 str += r.Number + "/";
             }

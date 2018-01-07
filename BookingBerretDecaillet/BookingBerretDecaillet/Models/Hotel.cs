@@ -21,7 +21,7 @@ namespace BookingBerretDecaillet.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public string WebSite { get; set; }
-        public ICollection<Room> rooms { get; set; }
+        public ICollection<Room> Rooms { get; set; }
 
         public override string ToString()
         {
